@@ -7,7 +7,6 @@ export const Publish = () => {
     const navigate = useNavigate();
     const [title,setTitle] = useState("");
     const [content,setContent] = useState("");
-    const[name,setName] = useState("");
   return (
     <div className="min-h-screen bg-gray-50">
       <Appbar/>
@@ -43,7 +42,6 @@ export const Publish = () => {
                         Authorization:localStorage.getItem("token")
                     }
                 })
-                setName(res.data.author.name);
                 navigate(`/blog/${res.data.blogid}`);
               }} className="px-6 py-3 text-white bg-green-600 hover:bg-green-700 focus:ring-4 focus:ring-green-300 font-semibold rounded-xl text-base transition duration-200">
                 Publish
