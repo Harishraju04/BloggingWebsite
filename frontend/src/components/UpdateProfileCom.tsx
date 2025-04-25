@@ -8,7 +8,7 @@ export const UpdateProfileCom = ({currname,curremail,currdescription}:{currname:
     const [description,setDescription] = useState("");
     const navigate = useNavigate();
     async function handler(){
-        await axios.put('http://127.0.0.1:8787/api/user/v1/updateprofile',{
+        await axios.put('https://medium-backend.harishkurapati2004.workers.dev/api/user/v1/updateprofile',{
             ...(name && {name}),
             ...(email && {email}),
             ...(description && {description})
