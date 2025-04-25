@@ -8,7 +8,7 @@ export const UpdateProfileCom = ({currname,curremail,currdescription}:{currname:
     const [description,setDescription] = useState("");
     const navigate = useNavigate();
     async function handler(){
-        await axios.put('https://medium-backend.harishkurapati2004.workers.dev/api/user/v1/updateprofile',{
+        await axios.put('http://127.0.0.1:8787/api/user/v1/updateprofile',{
             ...(name && {name}),
             ...(email && {email}),
             ...(description && {description})
@@ -17,7 +17,9 @@ export const UpdateProfileCom = ({currname,curremail,currdescription}:{currname:
                 Authorization: localStorage.getItem('token')
             }
         })
-        localStorage.setItem('username',email);
+        if(email!=""){
+            localStorage.setItem('username',email);
+        }
         navigate('/blog');
         alert('Details updated successfully');
     }
