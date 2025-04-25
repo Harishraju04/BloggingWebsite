@@ -2,8 +2,9 @@ import { PrismaClient } from '@prisma/client/edge'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { decode, sign, verify } from 'hono/jwt'
 import { Hono } from "hono";
-import {SignUpSchema} from "@rajuraju9884/medium-common";
+import {SignUpSchema,updateprofile} from "@rajuraju9884/medium-common";
 import { SigninSchema } from '@rajuraju9884/medium-common';
+import { Auth } from '../Middlewares/Auth';
 
 
 const user = new Hono<{
@@ -34,7 +35,7 @@ user.post("/v1/signup",async (c)=>{
                 data:{
                     email:body.email,
                     name:body.name,
-                    password:body.password
+                    password:body.password,
                 }
             })
             const payload = {
@@ -95,5 +96,89 @@ user.post("/v1/signin",async (c)=>{
 });
     
 })
+
+//Update Profile
+
+user.get("/v1/profile",Auth,async (c)=>{
+  const prisma = new PrismaClient({
+    datasourceUrl: c.env.DATABASE_URL,
+  }).$extends(withAccelerate());
+  
+  try{
+    const res = await prisma.user.findFirst({
+      where:{
+        id:c.get("userid")
+      },
+      select:{
+        email:true,
+        name:true,
+        description:true
+      }
+    })
+
+    return c.json({
+      res
+    
+    })
+  }
+  catch(err){
+    return c.json({
+      msg:err
+    })
+  }
+
+
+})
+
+user.put("/v1/updateprofile", Auth, async (c) => {
+    const prisma = new PrismaClient({
+      datasourceUrl: c.env.DATABASE_URL,
+    }).$extends(withAccelerate());
+  
+    const body = await c.req.json();
+    const parsed = updateprofile.safeParse(body);
+  
+    if (!parsed.success) {
+      c.status(400);
+      return c.json({
+        msg: "Invalid input",
+        error: parsed.error.errors
+      });
+    }
+  
+    const { name, email, description } = parsed.data;
+  
+    // Prevent empty update
+    if (!name && !email && !description) {
+      c.status(400);
+      return c.json({
+        msg: "At least one field (email, password, or description) must be provided."
+      });
+    }
+  
+    try {
+      await prisma.user.update({
+        where: {
+          id: c.get("userid"),
+        },
+        data: {
+          ...(name && { name }),
+          ...(email && { email }),
+          ...(description && { description }),
+        },
+      });
+  
+      return c.json({
+        msg: "Details updated successfully",
+      });
+    } catch (err) {
+      console.error("Prisma update error:", err);
+      c.status(500);
+      return c.json({
+        msg: "Failed to update user details",
+      });
+    }
+  });
+  
 
 export default user;

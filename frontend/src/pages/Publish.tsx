@@ -7,7 +7,8 @@ export const Publish = () => {
     const navigate = useNavigate();
     const [title,setTitle] = useState("");
     const [content,setContent] = useState("");
-  return (
+    const [tag,setTag] = useState("");
+   return (
     <div className="min-h-screen bg-gray-50">
       <Appbar/>
       <div className="flex justify-center mt-10">
@@ -25,9 +26,21 @@ export const Publish = () => {
               />
             </div>
 
+
             {/* Text Editor */}
             <div>
               <TextEditor onChange={(e)=>{setContent(e.target.value)}}/>
+            </div>
+
+            <div>
+            <label className="block text-2xl font-bold text-gray-800 mb-2">
+                Tag
+              </label>
+              <input onChange={(e)=>{setTag(e.target.value)}}
+                type="text"
+                placeholder="Enter your blog's tag"
+                className="w-full p-3 text-lg text-gray-900 bg-gray-100 border border-gray-300 rounded-xl focus:ring-2 focus:ring-blue-500 focus:outline-none"
+              />
             </div>
 
             {/* Publish Button */}
@@ -35,7 +48,8 @@ export const Publish = () => {
               <button onClick={async ()=>{
                 const res = await axios.post("https://medium-backend.harishkurapati2004.workers.dev/api/blog/v1/blog",{
                     title,
-                    content
+                    content,
+                    tag
                 },
                     {
                     headers:{
@@ -67,3 +81,6 @@ function TextEditor({onChange}:{onChange:(e:ChangeEvent<HTMLTextAreaElement>)=>v
     </div>
   );
 }
+
+
+

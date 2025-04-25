@@ -69,15 +69,18 @@ blog.post("/v1/blog",async (c)=>{
             data:{
                 title:body.title,
                 content:body.content,
+                tag:body.tag,
                 authorid:c.get('userid')
             },
             select:{
-                id:true
+                id:true,
+                tag:true
             }
         })
         return c.json({
             msg:"blog Created successfully",
-            blogid:res.id
+            blogid:res.id,
+            tag:res.tag
         })
     }
     catch(err){
@@ -136,12 +139,14 @@ blog.get('/v1/blog/bulk',async (c)=>{
     }).$extends(withAccelerate());
 
     try{
-        const res = await prisma.post.findMany({
+        const response = await prisma.post.findMany({
             select:{
                 title:true,
                 content:true,
                 published:true,
                 id:true,
+                tag:true,
+                published_date:true,
                 author:{
                     select:{
                         name:true
@@ -149,6 +154,12 @@ blog.get('/v1/blog/bulk',async (c)=>{
                 }
             }
         });
+
+        const res = response.map(post=>({
+            ...post,
+            published_date: post.published_date.toISOString().split('T')[0]
+        }));
+
         return c.json({
             res
         })
@@ -178,6 +189,8 @@ blog.get("/v1/blog/:id",async (c)=>{
                 content:true,
                 published:true,
                 id:true,
+                tag:true,
+                published_date:true,
                 author:{
                     select:{
                         name:true

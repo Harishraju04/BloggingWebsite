@@ -23,6 +23,12 @@ export const SigninSchema = z.object({
 
 });
 
+export const updateprofile = z.object({
+    name:z.string().optional(),
+    email:z.string().email().optional(),
+    description:z.string().optional()
+})
+
 
 export type SignUpSchemaType = z.infer<typeof SignUpSchema>;
 
@@ -31,3 +37,5 @@ export type SigninSchemaType = z.infer<typeof SigninSchema>;
 export type createBlogInputType = z.infer<typeof createBlogInput>;
 
 export type updateblogInputType = z.infer<typeof updateblogInput>;
+
+export type updateprofileType = z.infer<typeof updateprofile>;

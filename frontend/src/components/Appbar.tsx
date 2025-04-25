@@ -26,7 +26,9 @@ export const Appbar  = ()=>{
 
                 </div>
                 </Link>
+                <Link to={"/profile"}>
                 <Avatar name={localStorage.getItem('username')||"Anonymous"}></Avatar>
+                </Link>
             </div>
         </div>
 }

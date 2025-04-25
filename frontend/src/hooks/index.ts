@@ -1,13 +1,20 @@
 import axios from "axios";
-import { use, useEffect, useState } from "react";
+import {useEffect, useState } from "react";
 interface blogsType{
     "title": string,
     "content": string,
     "published": boolean,
     "id":string,
+    "tag":string,
+    "published_date":string,
    "author": {
         "name": string
     }
+}
+interface profileType{
+    "email":string,
+    "name":string,
+    "description"?: string
 }
 export const useBlogs = ()=>{
     const [loading,setLoading] = useState(true);
@@ -28,6 +35,24 @@ export const useBlogs = ()=>{
     }
 }
 
+export const useProfile=()=>{
+    const [loading,setLoading] = useState(true);
+    const [profile,setProfile] = useState<profileType>();
+    useEffect(()=>{
+        axios.get(`https://medium-backend.harishkurapati2004.workers.dev/api/user/v1/profile`,{
+            headers:{
+                Authorization:localStorage.getItem('token')
+            }
+        }).then(res=>{
+            setProfile(res.data.res);
+            setLoading(false);
+        })
+    },[])
+
+    return{
+        loading,profile
+    }
+}
 
 export const useBlog=({id}:{id:string})=>{
     const [loading,setloading] = useState(false);
@@ -45,6 +70,10 @@ export const useBlog=({id}:{id:string})=>{
             setloading(false);
         })
     },[])
+    let date = blog?.published_date.split("T")[0];
+    if(blog){
+        blog.published_date = date || "";
+    }
     return{
         loading,
         blog,

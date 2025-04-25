@@ -18,6 +18,7 @@ export function Blog(){
     }
     return <div>
         <Appbar></Appbar>
-       <FullBlog title={blog.title} content={blog.content} author={blog.author.name} date={"23-04-2025"}></FullBlog>
+        
+       <FullBlog title={blog.title} content={blog.content} author={blog.author.name} date={blog.published_date}></FullBlog>
     </div>
 }

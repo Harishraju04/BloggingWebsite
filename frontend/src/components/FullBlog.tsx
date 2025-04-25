@@ -2,7 +2,7 @@ interface FullBlogType{
     title:string,
     content:string,
     author:string,
-    date:string
+    date:string,
 }
 
 export const FullBlog = ({title,content,author,date}:FullBlogType) => {
@@ -23,7 +23,7 @@ export const FullBlog = ({title,content,author,date}:FullBlogType) => {
             </p>
           </div>
         </div>
-  
+
         {/* Sidebar - Author Info */}
         <div className="md:col-span-4 p-10">
           <div className="text-lg font-semibold text-gray-600 pb-2">
