@@ -2,7 +2,7 @@ import axios from "axios";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export const UpdateProfileCom = ({currname,curremail,currdescription}:{currname:string,curremail:string,currdescription:string}) => {
+export const UpdateProfileCom = ({currname,curremail,currdescription}:{currname?:string,curremail?:string,currdescription?:string}) => {
     const[name,setName] = useState("");
     const[email,setEmail] = useState("");
     const [description,setDescription] = useState("");

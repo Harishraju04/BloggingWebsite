@@ -8,6 +8,7 @@ interface blogsType{
     "tag":string,
     "published_date":string,
    "author": {
+        "description": string;
         "name": string
     }
 }
@@ -20,7 +21,7 @@ export const useBlogs = ()=>{
     const [loading,setLoading] = useState(true);
     const [blogs,setBlogs] = useState<blogsType[]>([]);
     useEffect(()=>{
-        axios.get("https://medium-backend.harishkurapati2004.workers.dev/api/blog/v1/blog/bulk",{
+        axios.get("https://medium-backend.harish9884.workers.dev/api/blog/v1/blog/bulk",{
             headers:{
                 Authorization:localStorage.getItem("token")
             }
@@ -39,7 +40,7 @@ export const useProfile=()=>{
     const [loading,setLoading] = useState(true);
     const [profile,setProfile] = useState<profileType>();
     useEffect(()=>{
-        axios.get(`https://medium-backend.harishkurapati2004.workers.dev/api/user/v1/profile`,{
+        axios.get(`https://medium-backend.harish9884.workers.dev/api/user/v1/profile`,{
             headers:{
                 Authorization:localStorage.getItem('token')
             }
@@ -60,7 +61,7 @@ export const useBlog=({id}:{id:string})=>{
     
 
     useEffect(()=>{
-        axios.get(`https://medium-backend.harishkurapati2004.workers.dev/api/blog/v1/blog/${id}`,{
+        axios.get(`https://medium-backend.harish9884.workers.dev/api/blog/v1/blog/${id}`,{
             headers:{
                 Authorization:localStorage.getItem("token")
             }

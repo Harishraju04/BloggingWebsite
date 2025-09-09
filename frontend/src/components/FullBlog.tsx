@@ -3,9 +3,10 @@ interface FullBlogType{
     content:string,
     author:string,
     date:string,
+    description:string
 }
 
-export const FullBlog = ({title,content,author,date}:FullBlogType) => {
+export const FullBlog = ({title,content,author,date,description}:FullBlogType) => {
     return (
       <div className="grid grid-cols-1 md:grid-cols-12 min-h-screen px-4 py-10 gap-8 bg-white">
         
@@ -31,6 +32,9 @@ export const FullBlog = ({title,content,author,date}:FullBlogType) => {
           </div>
           <div className="text-2xl font-bold text-gray-900">
             {author}
+          </div>
+          <div>
+            {description}
           </div>
         </div>
       </div>

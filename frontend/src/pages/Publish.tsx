@@ -49,7 +49,8 @@ export const Publish = () => {
                 const res = await axios.post("https://medium-backend.harishkurapati2004.workers.dev/api/blog/v1/blog",{
                     title,
                     content,
-                    tag
+                    tag,
+                    published:true
                 },
                     {
                     headers:{

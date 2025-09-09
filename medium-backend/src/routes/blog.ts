@@ -70,6 +70,7 @@ blog.post("/v1/blog",async (c)=>{
                 title:body.title,
                 content:body.content,
                 tag:body.tag,
+                published:body.published,
                 authorid:c.get('userid')
             },
             select:{
@@ -193,7 +194,8 @@ blog.get("/v1/blog/:id",async (c)=>{
                 published_date:true,
                 author:{
                     select:{
-                        name:true
+                        name:true,
+                        description:true
                     }
                 }
             }
